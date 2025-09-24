@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_REPO = "your-dockerhub-username/node-app"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/node-app.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_HUB_REPO}:latest")
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withDockerRegistry([ credentialsId: 'dockerhub-creds', url: '' ]) {
+                    script {
+                        docker.image("${DOCKER_HUB_REPO}:latest").push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success { echo '✅ Node.js App Built & Pushed to Docker Hub' }
+        failure { echo '❌ Pipeline Failed' }
+    }
+}
