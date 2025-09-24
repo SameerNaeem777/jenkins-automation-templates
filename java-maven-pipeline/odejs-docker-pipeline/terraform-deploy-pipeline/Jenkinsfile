@@ -1,0 +1,45 @@
+terraform-deploy-pipeline/Jenkinsfilepipeline {
+    agent any
+
+    environment {
+        TF_VAR_env = "dev"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/terraform-infra.git'
+            }
+        }
+
+        stage('Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Plan') {
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Apply') {
+            when { branch 'main' }
+            steps {
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
+    }
+
+    post {
+        success { echo '✅ Infrastructure Deployed Successfully' }
+        failure { echo '❌ Terraform Pipeline Failed' }
+    }
+}
