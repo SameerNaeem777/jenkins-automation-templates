@@ -1,0 +1,8 @@
+jenkins-automation-templates/
+│── README.md
+│── java-maven-pipeline/
+│   └── Jenkinsfile
+│── nodejs-docker-pipeline/
+│   └── Jenkinsfile
+│── terraform-deploy-pipeline/
+│   └── Jenkinsfile
