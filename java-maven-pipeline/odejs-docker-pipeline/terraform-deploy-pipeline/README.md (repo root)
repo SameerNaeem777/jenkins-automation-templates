@@ -1,0 +1,22 @@
+# Jenkins Automation Templates 🚀
+
+A collection of ready-to-use **Jenkins pipeline templates** for common DevOps use cases.
+
+## 📌 Included Pipelines
+1. **Java + Maven** → Build, test & deploy a Java application  
+2. **Node.js + Docker** → Build, test & push Docker image to Docker Hub  
+3. **Terraform** → Deploy infrastructure with Terraform  
+
+## 🔧 Usage
+- Copy any Jenkinsfile into your repo.
+- Create a new Jenkins pipeline job.
+- Set the pipeline script path.
+- Run the pipeline 🚀
+
+## 🔐 Requirements
+- Jenkins with Pipeline plugin
+- For Docker pipeline → Docker installed + DockerHub credentials in Jenkins (`dockerhub-creds`)
+- For Terraform pipeline → Terraform installed on Jenkins agent
+
+## 🤝 Contribution
+Fork this repo and add your Jenkins pipelines!
